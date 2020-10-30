@@ -1,0 +1,9 @@
+work_folder: ${user.home}/.deeplearning4j
+
+folder:
+  data: ${work_folder}/data
+  model: ${work_folder}/models
+
+model:
+  preTrainedModel: ${work_folder}/models/vgg16/Vgg16OnISIC2020.zip
+

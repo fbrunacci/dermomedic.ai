@@ -21,3 +21,12 @@
 
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
+
+.gradle/*
+build/*
+.idea/*
+python/.idea/*
+python/venv/*
+python/data/*.tfrec
+python/model/EfficientNetB6_512x512_2019-2020_epoch12_auc_0.97.h5
+python/dermomedic/__pycache__/*

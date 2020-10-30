@@ -1,3 +1,11 @@
+## env
+
+virtualenv venv --python=python3.6.10
+source venv/bin/activate
+pip install --upgrade pip
+pip install -r requirements.txt
+
+
 Get model from
 https://www.kaggle.com/masdevallia/melanoma-classification-3rd-place-models?select=EfficientNetB6_512x512_2019-2020_epoch12_auc_0.97.h5
 

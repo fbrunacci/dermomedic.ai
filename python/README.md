@@ -2,7 +2,7 @@
 
 ## init/config sample
 
-### venv
+### venv (avec pycharm par exemple ou sinon)
 ```
 virtualenv venv --python=python3.6.10
 source venv/bin/activate
@@ -20,7 +20,7 @@ cd model
 wget http://u2py.com/dermomedic/EfficientNetB6_512x512_2019-2020_epoch12_auc_0.97.h5
 ```
 
-### data
+### sample data
 And get sample data from 
 https://www.kaggle.com/cdeotte/melanoma-512x512
 
