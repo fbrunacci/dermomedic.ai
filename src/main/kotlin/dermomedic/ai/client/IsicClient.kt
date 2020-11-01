@@ -44,6 +44,6 @@ suspend fun main(args: Array<String>) {
             .setLongSerializationPolicy(LongSerializationPolicy.STRING)
             .create()
     val analyse = gson.fromJson(json, Analyse::class.java)
-    println(analyse.idx)
+    println(analyse)
 
 }

@@ -1,33 +1,48 @@
-import json
 import glob
 from pathlib import Path
+from abc import ABC, abstractmethod
+from dermomedic.model import Analyse
+import json
 
 
-class Analyse:
-    def __init__(self, idx, fileName, extension, malingantEvaluation):
-        self.idx = idx
-        self.fileName = fileName
-        self.extension = extension
-        self.malingantEvaluation = malingantEvaluation
+class IDatabase(ABC):
+    def __init__(self):
+        pass
 
-    def __str__(self):
-        return json.dumps(self.__dict__)
+    @abstractmethod
+    def read_analyse(self, idx) -> Analyse:
+        pass
+
+    @abstractmethod
+    def create_analyse(self, file_name, extension) -> Analyse:
+        pass
+
+    @abstractmethod
+    def save_analyse(self, analyse: Analyse):
+        pass
+
+    @abstractmethod
+    def save_prediction(self, analyse: Analyse, prediction):
+        pass
+
+    @abstractmethod
+    def save_image(self, analyse, uploaded_file):
+        pass
 
 
-class Database:
-
+class FSDatabase(IDatabase):
     def __init__(self, upload_dir):
         self.upload_dir = upload_dir
-        self.biggestId = max(self.ids())
+        self.biggestId = max(self.ids(), default=0)
 
     def read_analyse(self, idx) -> Analyse:
         with open(f'{self.upload_dir}/{idx}.idx') as json_file:
             analyse_dict = json.load(json_file)
         return Analyse(**analyse_dict)
 
-    def create_analyse(self, fileName, extension) -> Analyse:
+    def create_analyse(self, file_name, extension) -> Analyse:
         idx = self.next_id()
-        new_analyse = Analyse(idx, fileName, extension, None)
+        new_analyse = Analyse(idx, file_name, extension)
         self.save_analyse(new_analyse)
         return self.read_analyse(idx)
 
@@ -40,6 +55,11 @@ class Database:
         analyse.malingantEvaluation = prediction
         self.save_analyse(analyse)
 
+    def save_image(self, analyse, uploaded_file):
+        file_path = f'{self.upload_dir}/{analyse.idx}.{analyse.extension}'
+        print(f'saving image to {file_path}')
+        uploaded_file.save(file_path)
+
     def ids(self):
         return list(map(lambda x: int(Path(x).stem), glob.glob(f'{self.upload_dir}/*.idx')))
 
@@ -49,7 +69,7 @@ class Database:
 
 
 if __name__ == '__main__':
-    db = Database('/home/fabien/.deeplearning4j/data/analyser')
+    db = IDatabase('/home/fabien/.deeplearning4j/data/analyser')
     analyse = db.read_analyse(1)
     print(analyse.malingantEvaluation)
     cc = db.create_analyse("fileName", "ext")
