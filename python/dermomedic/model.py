@@ -1,7 +1,8 @@
 import json
 
+
 class Analyse:
-    def __init__(self, idx, fileName, extension, malingantEvaluation = None):
+    def __init__(self, idx, fileName, extension, malingantEvaluation: int = None):
         self.idx = idx
         self.fileName = fileName
         self.extension = extension

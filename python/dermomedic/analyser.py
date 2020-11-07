@@ -1,33 +1,22 @@
-from injector import inject
-from dermomedic.neuralnet import Masdevallia
-from dermomedic.database import IDatabase, Analyse
-from dermomedic.neuralnet import IEfficientNet
-import pathlib
-import os
+from dermomedic import database, neuralnet, model
 from multiprocessing import Pool
-import time
-from abc import ABC, abstractmethod
 
 
-class IAnalyser(ABC):
-    def __init__(self):
-        pass
+class Analyser:
 
-    def launch_analyse(self, analyse):
-        pass
-
-
-class Analyser(IAnalyser):
-
-    @inject
-    def __init__(self, db: IDatabase, neural_net: IEfficientNet):
+    def __init__(self, db: database.FSDatabase, neural_net: neuralnet.Masdevallia):
         self.db = db
         self.neural_net = neural_net
         self.pool = Pool(processes=1)
 
-    def launch_analyse(self, analyse):
-        prediction = self.neural_net.predict_image('/home/fabien/.deeplearning4j/data/analyser/1.jpg')
+    def launch_analyse(self, analyse: model.Analyse):
+        print(f'launch_analyse on {analyse}')
+        img = self.db.get_image_path(analyse)
+        prediction = self.neural_net.predict_image(img)
         print(f'prediction: {prediction}')
+        analyse.malingantEvaluation = prediction[0][0].item()
+        print(f'after prediction: {analyse}')
+        self.db.save_analyse(analyse)
 
 
 

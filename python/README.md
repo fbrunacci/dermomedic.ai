@@ -1,7 +1,7 @@
 # isic masdevallia isic 
+back-end rest service that evaluate the masdevallia isic pre-parameterized efficient net for melanoma recognition
 
 ## init/config sample
-
 ### venv (avec pycharm par exemple ou sinon)
 ```
 virtualenv venv --python=python3.6.10

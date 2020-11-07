@@ -1,35 +1,12 @@
-from injector import inject
-from dermomedic.neuralnet import Masdevallia
-from dermomedic.database import IDatabase, Analyse
-from dermomedic.neuralnet import IEfficientNet
+from dermomedic.database import FSDatabase, Analyse
 import pathlib
 import os
 from multiprocessing import Pool
-import time
-from abc import ABC, abstractmethod
 
 
-class IService(ABC):
-    def __init__(self):
-        pass
+class DermomedicService:
 
-    @abstractmethod
-    def create_analyse(self, filename):
-        pass
-
-    @abstractmethod
-    def read_analyse(self, idx):
-        pass
-
-    @abstractmethod
-    def process_analyse(self, uploaded_file):
-        pass
-
-
-class Service(IService):
-
-    @inject
-    def __init__(self, db: IDatabase):
+    def __init__(self, db: FSDatabase):
         self.db = db
         self.pool = Pool(processes=1)
 
