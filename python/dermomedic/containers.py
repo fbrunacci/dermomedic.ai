@@ -25,7 +25,8 @@ class Container(containers.DeclarativeContainer):
 
     neural_net = providers.Singleton(
         neuralnet.Masdevallia,
-        model_file=config.neuralnet.model
+        model_file=config.neuralnet.model,
+        forceCPU=config.neuralnet.forceCPU
     )
 
     analyser = providers.Singleton(

@@ -2,3 +2,5 @@ database:
   dir: '/home/fabien/.deeplearning4j/data/analyser'
 neuralnet:
   model: 'EfficientNetB6_512x512_2019-2020_epoch12_auc_0.97.h5'
+  forceCPU: True
+

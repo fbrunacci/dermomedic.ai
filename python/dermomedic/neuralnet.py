@@ -7,7 +7,13 @@ import efficientnet.tfkeras as efn
 class Masdevallia:
     AUTO = tf.data.experimental.AUTOTUNE
 
-    def __init__(self, model_file='EfficientNetB6_512x512_2019-2020_epoch12_auc_0.97.h5'):
+    def __init__(self, model_file='EfficientNetB6_512x512_2019-2020_epoch12_auc_0.97.h5', forceCPU=False):
+        if forceCPU :
+            # Set CPU as available physical device
+            my_devices = tf.config.experimental.list_physical_devices(device_type='CPU')
+            tf.config.experimental.set_visible_devices(devices=my_devices, device_type='CPU')
+            tf.config.set_visible_devices([], 'GPU')
+
         flask_path = os.path.dirname(os.path.realpath(__file__))
         model_path = f'{flask_path}/../model/{model_file}'
         efn.EfficientNetB6

@@ -6,6 +6,8 @@ from dermomedic.containers import Container
 from dermomedic.encoder import DictEncoder
 import json
 
+from dermomedic.model import Analyse
+
 
 def analyse_json(id, service=Provide[Container.service]):
     idx = int(id)
@@ -32,3 +34,4 @@ def file_upload(service=Provide[Container.service],
 
 def launch_analyse_thread(analyse, analyser):
     analyser.launch_analyse(analyse)
+
